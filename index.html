@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FOVI-Dex: efficient perceptive robot learning through foveated rendering, active vision, and dexterous manipulation. Explore the method and watch simulation and real-robot demonstrations.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="FOVI-Dex · Foveated perception for dexterous manipulation">
+  <meta property="og:description" content="Foveated rendering and perception for language-directed dexterous manipulation.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/grasp-scene.png">
+  <title>FOVI-Dex · Foveated perception for dexterous manipulation</title>
+  <style>/* Critical styles are inlined so the first paint needs no separate download. */
+#site-loader{display:none}
+#site-content{display:contents}
+.page-loading body{overflow:hidden!important}
+.page-loading #site-content{visibility:hidden}
+.page-loading #site-loader{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:auto;padding:32px 24px;background:#fff;color:#192234;font-family:Inter,"Helvetica Neue",Arial,sans-serif;text-align:center}
+.loading-card{width:min(100%,440px);margin:auto;box-sizing:border-box}
+.loading-mark{position:relative;width:104px;height:104px;margin:0 auto 30px}
+.loading-mark i{position:absolute;border:1px solid #2458d326;border-radius:50%;inset:0;animation:loading-focus 2.6s ease-in-out infinite}
+.loading-mark i:nth-child(2){inset:13px;border-color:#2458d345;animation-delay:.13s}
+.loading-mark i:nth-child(3){inset:25px;border-color:#9063bc70;animation-delay:.26s}
+.loading-mark i:nth-child(4){inset:35px;border-color:#2458d3a0;animation-delay:.39s}
+.loading-mark b{position:absolute;inset:45px;border-radius:50%;background:#2458d3;box-shadow:0 0 24px #2458d340}
+.loading-wordmark{font-family:FoviWordmark,sans-serif;font-size:32px;font-weight:700;letter-spacing:0;color:#152134;margin:0 0 15px;line-height:1.2}
+.loading-wordmark span{font-weight:inherit;color:#2458d3}
+#loading-title{font-size:17px;font-weight:500;letter-spacing:-.02em;line-height:1.45;margin:0 0 10px}
+#loading-message{font-size:12px;color:#626e80;line-height:1.75;min-height:42px;margin:0 0 22px}
+#loading-progress{display:block;appearance:none;border:0;width:100%;height:3px;background:#dfe7f4;border-radius:4px;overflow:hidden}
+#loading-progress::-webkit-progress-bar{background:#dfe7f4}
+#loading-progress::-webkit-progress-value{background:#2458d3;transition:width .25s ease}
+#loading-progress::-moz-progress-bar{background:#2458d3}
+.loading-stages{display:flex;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.02em;color:#7e899b;margin-top:17px}
+.loading-stages span:before{content:"";display:inline-block;width:5px;height:5px;vertical-align:middle;background:#ced8e9;border-radius:50%;margin-right:6px}
+.loading-stages span[data-ready]{color:#2458d3}
+.loading-stages span[data-ready]:before{background:#2458d3}
+#loading-retry{margin:28px auto 0;padding:11px 17px;border:1px solid #c5d2e9;border-radius:7px;background:white;color:#2458d3;font:500 12px Inter,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
+#loading-retry:focus-visible{outline:3px solid #7c9fed;outline-offset:4px}
+#loading-retry[hidden],#loading-error[hidden]{display:none}
+.loading-error{font-size:11px;color:#7d5563;line-height:1.7;margin:15px auto 0;max-width:370px;overflow-wrap:anywhere}
+.loading-failed .loading-mark i{animation:none;border-color:#b28c9b44}
+@keyframes loading-focus{0%,100%{transform:scale(.96);opacity:.65}50%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.loading-mark i{animation:none}#loading-progress::-webkit-progress-value{transition:none}}</style>
+  <script>window.FOVI_BUILD={"build": "80e6388a6d014eae", "assets": {"assets/architecture.svg": "cf01a6026eaa7f0c", "assets/fonts/LICENSE": "1e6ccc54aa0b0aa4", "assets/fonts/Lato-Bold.ttf": "bf1b8130069b44b9", "assets/foveation_sweep_best.svg": "1ca7a141c3b6899d", "assets/fovi-dex-explainer-transcript.html": "d652f80b0e908646", "assets/fovi-dex-explainer.jpg": "4c9a62915e8821fa", "assets/fovi-dex-explainer.mp4": "715f3e4e7def1f9d", "assets/fovi-dex-explainer.vtt": "d497b22bc85ccaa1", "assets/grasp-scene.png": "45f1ee11f4be01c6", "assets/licenses/three.txt": "8b378ebe60e2fe50", "assets/observations-v5-active.png": "335a88fef23fd8de", "assets/observations-v5-foveated.png": "d9dc996014aea6e0", "assets/observations-v5-highres.png": "0921557bbcb092a9", "assets/paper.pdf": "1f8b5946a902e371", "assets/rendering-meshes.json.gz": "038d6d7c297974d4", "assets/rendering-scene.json": "48e0a503af1db1b1", "assets/swaps_success.svg": "e0989e758f177c7d", "assets/training-results.js": "382ca349d6439d1a", "assets/videos/foveated_active-00-real.jpg": "bf8d4d76f465985e", "assets/videos/foveated_active-00-real.mp4": "48ce4b8b62434f3f", "assets/videos/foveated_active-00-sim.jpg": "181fe36f3a640fc4", "assets/videos/foveated_active-00-sim.mp4": "95553db135b3d7fe", "assets/videos/foveated_active-01-real.jpg": "f832d978084fecba", "assets/videos/foveated_active-01-real.mp4": "fbe9efb4e0ac5a55", "assets/videos/foveated_active-01-sim.jpg": "34f010403993400c", "assets/videos/foveated_active-01-sim.mp4": "7272def02ca6b6e3", "assets/videos/foveated_active-09-real.jpg": "09dee708ebf66038", "assets/videos/foveated_active-09-real.mp4": "718921de2c98fcd2", "assets/videos/foveated_active-09-sim.jpg": "2ed29b37b0d5bc5f", "assets/videos/foveated_active-09-sim.mp4": "952eee6543549096", "assets/videos/foveated_active-10-real.jpg": "0ef7d17144896953", "assets/videos/foveated_active-10-real.mp4": "e5acdafa8b9ea98b", "assets/videos/foveated_active-10-sim.jpg": "0891c701517914d8", "assets/videos/foveated_active-10-sim.mp4": "d9b0e86bb3be0b35", "assets/videos/foveated_active-12-real.jpg": "d48edaab021a3b3c", "assets/videos/foveated_active-12-real.mp4": "16f5cffd6c0f3b2f", "assets/videos/foveated_active-12-sim.jpg": "3b043adb8be62a8c", "assets/videos/foveated_active-12-sim.mp4": "c05ec08b5297e08b", "assets/videos/foveated_active-18-real.jpg": "06c082eb2e379833", "assets/videos/foveated_active-18-real.mp4": "bed6d50ce5b16b12", "assets/videos/foveated_active-18-sim.jpg": "36444984ba82ce51", "assets/videos/foveated_active-18-sim.mp4": "947e89f64da338ed", "assets/videos/foveated_active-31-real.jpg": "d66628ce2f17631d", "assets/videos/foveated_active-31-real.mp4": "42e2ca609351ccf2", "assets/videos/foveated_active-31-sim.jpg": "7e4d921641a8d486", "assets/videos/foveated_active-31-sim.mp4": "ce234f4b09c28f2a", "assets/videos/foveated_active-33-real.jpg": "f4ce62edcb95b40e", "assets/videos/foveated_active-33-real.mp4": "3bb922322f53b870", "assets/videos/foveated_active-33-sim.jpg": "ffa73c87589c2f82", "assets/videos/foveated_active-33-sim.mp4": "c10c6859c4076698", "assets/videos/foveated_active-40-real.jpg": "b4c20bb873b4d63f", "assets/videos/foveated_active-40-real.mp4": "1c5f01df5cdb00d1", "assets/videos/foveated_active-40-sim.jpg": "ed0a4e6f175ead5b", "assets/videos/foveated_active-40-sim.mp4": "0a593c8075fc9f5d", "assets/videos/foveated_active-49-real.jpg": "fea607f9d4e4cd2a", "assets/videos/foveated_active-49-real.mp4": "d51014523650c6a4", "assets/videos/foveated_active-49-sim.jpg": "c3d849400d857ecb", "assets/videos/foveated_active-49-sim.mp4": "6d1ca48feee5a138", "camera-geometry.js": "5c8a9ef3f176efef", "editorial.css": "35b7921e0111704f", "explainer-player.js": "ad3d15ec02eaca12", "favicon.svg": "ddaac31e23c8d63a", "followup.css": "2b9a8c9ee7379688", "followup.js": "16ace2838d7a172f", "learning-chart.js": "d027b57a168ae6a6", "paired-video.js": "01c7897132d633d2", "ray-scene.js": "1dbfbc2094275f2e", "rendering.css": "c242ba4a54309217", "rendering.js": "ce37e0d3c56a537b", "representative-videos.js": "22fb68dd417d8e1d", "result-highlights.css": "692c429805aee50b", "retinal-sampler.js": "d74cab7b5424b107", "sampling.js": "34ca586268522ca0", "site.css": "00e22740b641d4db", "site.js": "b95a392667b026a8", "story.css": "9ae7e261aa2602e7", "webgl-scene.js": "a1dee905e919d749"}};
+"use strict";
+
+(() => {
+  const root=document.documentElement,release=window.FOVI_BUILD;
+  const pending=new Map([
+    ["version",["data","Checking for the latest release…"]],
+    ["scripts",["data","Loading learning curves and controls…"]],
+    ["sampling",["methods","Preparing the sampling viewer…"]],
+    ["rendering",["methods","Preparing the rendering viewer…"]],
+    ["figures",["figures","Loading the figures…"]],
+    ["videos",["videos","Loading the complete policy recordings…"]],
+  ]);
+  const total=pending.size;
+  let failed=false,finished=false;
+  root.classList.add("page-loading");
+  function update(){
+    const progress=document.getElementById("loading-progress");
+    if(!progress)return;
+    progress.max=total;progress.value=total-pending.size;
+    for(const stage of document.querySelectorAll("[data-loading-group]"))stage.toggleAttribute("data-ready",![...pending.values()].some(([group])=>group===stage.dataset.loadingGroup));
+    if(!failed)document.getElementById("loading-message").textContent=pending.size?pending.values().next().value[1]:"Everything is ready.";
+  }
+  function fail(error){
+    if(finished||failed)return;
+    clearTimeout(deadline);
+    failed=true;root.classList.add("loading-failed");
+    const show=()=>{
+      document.getElementById("loading-title").textContent="Let’s get everything loaded.";
+      document.getElementById("loading-message").textContent="Some content could not load. Check your connection or sign-in, then try a fresh reload.";
+      const detail=document.getElementById("loading-error");detail.hidden=false;detail.textContent=error.message;
+      document.getElementById("loading-retry").hidden=false;
+      document.getElementById("site-loader").setAttribute("aria-busy","false");
+    };
+    if(document.getElementById("site-loader"))show();else document.addEventListener("DOMContentLoaded",show,{once:true});
+  }
+  function done(key){
+    if(!pending.has(key))return;
+    pending.delete(key);update();
+    if(!pending.size&&!failed){
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        if(failed)return;
+        finished=true;clearTimeout(deadline);
+        root.classList.remove("page-loading");
+        const content=document.getElementById("site-content");content.inert=false;content.removeAttribute("aria-hidden");
+        document.getElementById("site-loader").setAttribute("aria-busy","false");
+        dispatchEvent(new Event("fovi:ready"));
+      }));
+    }
+  }
+  function asset(path){
+    if(!Object.hasOwn(release.assets,path))throw new Error("Unversioned website resource: "+path);
+    return path+"?v="+release.assets[path];
+  }
+  function retry(){
+    const url=new URL(location.href);url.searchParams.set("reload",Date.now().toString(36));location.replace(url);
+  }
+  const deadline=setTimeout(()=>fail(new Error("Loading took longer than expected. Reload to check the release and try again.")),120000);
+  window.FoviLoading={done,fail,asset,get ready(){return finished;}};
+  addEventListener("error",event=>{
+    if(finished)return;
+    const target=event.target;
+    if(target instanceof HTMLScriptElement||target instanceof HTMLLinkElement)fail(new Error("A required website file could not load."));
+    else if(event.error)fail(new Error("The interactive page could not initialize. Please reload fresh content."));
+  },true);
+  addEventListener("unhandledrejection",()=>{if(!finished)fail(new Error("A required part of the page could not initialize."));});
+  async function checkRelease(){
+    const response=await fetch("site-version.json",{cache:"no-store",signal:AbortSignal.timeout(30000)});
+    if(!response.ok||!response.headers.get("Content-Type")?.includes("application/json"))throw new Error("The latest site release could not be checked. Please check your connection or sign-in.");
+    const current=await response.json();
+    if(typeof current.build!=="string"||!current.build)throw new Error("The release check did not return website data. Your sign-in may need refreshing.");
+    if(current.build!==release.build){
+      const url=new URL(location.href);
+      if(url.searchParams.get("build")===current.build)throw new Error("The site is being updated. Please retry in a moment.");
+      url.searchParams.set("build",current.build);location.replace(url);return;
+    }
+    done("version");
+  }
+  checkRelease().catch(fail);
+  document.addEventListener("DOMContentLoaded",async()=>{
+    const content=document.getElementById("site-content");content.inert=true;content.setAttribute("aria-hidden","true");
+    document.getElementById("loading-retry").addEventListener("click",retry);update();
+    try{
+      if(!window.FOVI_FOLLOWUP)throw new Error("The results could not initialize.");
+      await document.fonts.ready;done("scripts");
+      const images=[...document.images];
+      for(const image of images)image.loading="eager";
+      const extraURLs=new Set([...document.querySelectorAll("video[poster]")].map(video=>video.poster));
+      for(const image of document.querySelectorAll("picture img"))extraURLs.add(image.src);
+      for(const source of document.querySelectorAll("picture source[srcset]"))for(const candidate of source.srcset.split(","))extraURLs.add(candidate.trim().split(/\s+/)[0]);
+      for(const url of extraURLs){const image=new Image();image.src=url;images.push(image);}
+      await Promise.all(images.map(image=>image.decode()));done("figures");
+    }catch(error){fail(new Error("Figures or page data could not load. Please reload fresh content."));}
+  },{once:true});
+})();</script>
+  <link rel="icon" href="favicon.svg?v=ddaac31e23c8d63a" type="image/svg+xml">
+  <link rel="stylesheet" href="site.css?v=00e22740b641d4db">
+  <link rel="stylesheet" href="rendering.css?v=c242ba4a54309217">
+  <link rel="stylesheet" href="followup.css?v=2b9a8c9ee7379688">
+  <link rel="stylesheet" href="story.css?v=9ae7e261aa2602e7">
+  <link rel="stylesheet" href="result-highlights.css?v=692c429805aee50b">
+  <script defer src="assets/training-results.js?v=382ca349d6439d1a"></script>
+  <script defer src="learning-chart.js?v=d027b57a168ae6a6"></script>
+  <script defer src="camera-geometry.js?v=5c8a9ef3f176efef"></script>
+  <script defer src="ray-scene.js?v=1dbfbc2094275f2e"></script>
+  <script defer src="webgl-scene.js?v=a1dee905e919d749"></script>
+  <script defer src="retinal-sampler.js?v=d74cab7b5424b107"></script>
+  <script defer src="sampling.js?v=34ca586268522ca0"></script>
+  <script defer src="rendering.js?v=ce37e0d3c56a537b"></script>
+  <script defer src="paired-video.js?v=01c7897132d633d2"></script>
+  <script defer src="explainer-player.js?v=ad3d15ec02eaca12"></script>
+  <script defer src="representative-videos.js?v=22fb68dd417d8e1d"></script>
+  <script defer src="site.js?v=b95a392667b026a8"></script>
+  <script defer src="followup.js?v=16ace2838d7a172f"></script>
+  <link rel="stylesheet" href="editorial.css?v=35b7921e0111704f">
+</head>
+<body>
+<section id="site-loader" aria-labelledby="loading-title" aria-describedby="loading-message" aria-busy="true">
+  <div class="loading-card">
+    <div class="loading-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+    <p class="loading-wordmark">FOVI<span>-Dex</span></p>
+    <h1 id="loading-title">Loading FOVI-Dex</h1>
+    <p id="loading-message" role="status" aria-live="polite">Loading figures and recordings.</p>
+    <progress id="loading-progress" max="6" value="0" aria-label="Website preparation"></progress>
+    <div class="loading-stages" aria-hidden="true"><span data-loading-group="data">Results</span><span data-loading-group="methods">Methods</span><span data-loading-group="figures">Figures</span><span data-loading-group="videos">Recordings</span></div>
+    <button id="loading-retry" type="button" hidden>Reload fresh content ↻</button>
+    <p class="loading-error" id="loading-error" hidden></p>
+  </div>
+</section><div id="site-content">
+<a class="skip-link" href="#sampling">Skip to content</a>
+<header class="masthead">
+  <a class="wordmark" href="#top" aria-label="FOVI-Dex home"><img src="favicon.svg?v=ddaac31e23c8d63a" width="27" height="27" alt="">FOVI<span>-Dex</span></a>
+  <nav aria-label="Page sections"><a href="#sampling">Foveation</a><a href="#results">Results</a><a href="#real-world">Sim2real</a><a href="#methods">Methods</a></nav>
+  <div class="reading-progress" aria-hidden="true"></div>
+</header>
+<main id="top">
+  <section class="hero wrap" aria-labelledby="project-title">
+    <h1 id="project-title" class="project-wordmark">FOVI<span>-Dex</span></h1>
+    <p class="paper-title">Foveation enables efficient perceptive learning<br class="desktop-break"> of dexterous manipulation in simulation</p>
+    <p class="hero-training">No human demonstrations. No state-based policy pretraining or distillation.<br>Learn in simulation. Transfer zero-shot to the real robot.</p>
+<div class="authors" aria-label="Authors">
+      <a href="mailto:nblauch@nvidia.com">Nicholas M. Blauch<sup>†</sup></a><span>Nicolas Moenne-Loccoz</span><span>Jayjun Lee</span><span>Patrick Yin</span><span>Asif Rana</span><span>Mohak Bhardwaj</span><span>Jessica Yin</span><span>Sam Mady</span><span>Marilyn Reeb</span><span>Karl Van Wyk</span><span>Nathan Ratliff</span><span>Jae-Hyun Jung</span><span>Ruth Rosenholtz</span><span>Ankur Handa</span><span>Gavriel State</span>
+    </div>    <p class="affiliation">Dex Manipulation Workshop · CoRL 2026<small class="release-note">10th Conference on Robot Learning (CoRL 2026), Austin TX, USA.</small></p>
+    <div class="hero-actions"><a class="button primary" href="assets/paper.pdf?v=1f8b5946a902e371" target="_blank" rel="noopener">Paper (PDF) ↗</a><a class="button" href="#sampling">Explore the idea <span>↓</span></a><a class="button" href="#opening"><span aria-hidden="true">▷</span> Watch the film</a></div>
+  </section>
+
+
+
+  <section class="policy-comparisons wrap" id="opening" aria-label="Project video">
+    <figure class="explainer-film">
+      <video id="explainer-video" controls muted playsinline preload="none" width="1920" height="1080" poster="assets/fovi-dex-explainer.jpg?v=4c9a62915e8821fa" aria-label="FOVI-Dex: an animated research explainer" aria-describedby="explainer-caption">
+        <source src="assets/fovi-dex-explainer.mp4?v=715f3e4e7def1f9d" type="video/mp4">
+        <track kind="captions" src="assets/fovi-dex-explainer.vtt?v=d497b22bc85ccaa1" srclang="en" label="English">
+        <a href="assets/fovi-dex-explainer.mp4?v=715f3e4e7def1f9d">Download the explainer</a>.
+      </video>
+      <button id="explainer-play" type="button">▷ Play the film</button>
+      <figcaption id="explainer-caption">The idea, the learning, and the real robot. <a href="assets/fovi-dex-explainer.mp4?v=715f3e4e7def1f9d" download>Download video ↗</a> <a href="assets/fovi-dex-explainer-transcript.html?v=d652f80b0e908646">Transcript ↗</a></figcaption>
+      <p id="explainer-status" role="status" hidden></p>
+    </figure>
+  </section>
+<section class="section wrap" id="sampling" aria-labelledby="sampling-title">
+  <span id="overview" class="anchor-alias"></span>
+  <div class="section-heading"><h2 id="sampling-title">Foveation enables efficient perceptive RL</h2></div>
+  <p class="section-intro">Rendering and encoding dense images consume resources that could support more parallel learning. Foveation concentrates detail around gaze in a compact image while retaining peripheral context.</p>
+  <div class="sampling-lab">
+    <div class="lab-controls">
+      <div class="segmented" role="group" aria-label="Active observation type"><button data-sampling="foveated" aria-pressed="true">Foveated active</button><button data-sampling="uniform" aria-pressed="false">Uniform active</button></div>
+      <label class="slider-label" for="foveation">CMF a (°) <span> <output id="foveation-value">3.483</output></span><input id="foveation" type="range" min="-2.2" max="3.8" step="0.001" value="0.542"></label>
+      <button class="button small-button" id="sampling-reset">Reset</button>
+    </div>
+    <div class="sampling-panels">
+      <figure class="camera-panel"><div class="panel-title"><span>Uniform fixed high-resolution</span><small>300 × 480</small></div><canvas id="sample-camera" width="480" height="300" tabindex="0" role="img" aria-label="Uniform fixed high-resolution image. Drag or use arrow keys to move the active view's fixation; Home resets."></canvas></figure>
+      <figure><div class="panel-title"><span id="active-view-label">Foveated active</span><small>128 × 128</small></div><canvas id="sample-native" width="128" height="128" role="img" aria-label="Compact active view sampled from the full source image"></canvas></figure>
+    </div>
+  </div>
+  <p class="small muted sampling-note">Drag on the left image to move gaze. The left raster matches the high-resolution model; the active view samples the full source image. This illustrates camera sampling on a static simulation scene. Training renders each observation directly.</p>
+    <div class="budget-comparison" aria-label="Current high-resolution and foveated resource comparison">
+      <div class="budget-row budget-head"><span>Same ≈45 GB budget</span><span>High resolution<small>300 × 480 · uniform fixed</small></span><span>Compact observation<small>128 × 128 · foveated active</small></span></div>
+      <div class="budget-row"><span>Environments / GPU</span><strong>208</strong><strong>1 248<small>6.0× as many</small></strong></div>
+      <div class="budget-row"><span>Total training FPS<small>8 L40S GPUs</small></span><strong>≈4 685</strong><strong>≈20 760<small>4.4× the throughput</small></strong></div>
+      <div class="budget-row"><span>Visual tokens / frame</span><strong>570</strong><strong>64<small>8.9× fewer</small></strong></div>
+    </div>
+    <p class="budget-source">Throughput: full training runs on eight L40S GPUs, averaged over three seeds. Environment allocations use the same approximate 45 GB process-memory budget from single-Blackwell calibration.</p></section>
+
+  <section class="section tinted" id="results" aria-labelledby="results-title"><div class="wrap">
+    <span id="followup" class="anchor-alias"></span><span id="experiment5" class="anchor-alias"></span>
+    <div class="section-heading"><h2 id="results-title">More learning from the same compute budget</h2></div>
+    <p class="section-intro">Foveated observations preserve detail where the robot looks, while leaving more compute for parallel learning. Compare the models on five-object clutter over the same 72 hours of training.</p>
+  <div id="visual-configurations" class="model-schematic">
+    <figure class="configuration-figure">
+      <div class="configuration-instruction"><span>Matched scene</span><strong>“Pick up the sneaker.”</strong></div>
+      <div class="configuration-grid">
+        <div class="configuration-card" data-configuration="foveated">
+          <div class="configuration-label"><i class="legend-dot" aria-hidden="true"></i><h3>Foveated active</h3></div>
+          <p class="configuration-gaze">Moving gaze · nonuniform detail</p>
+          <div class="configuration-image"><img src="assets/observations-v5-foveated.png?v=d9dc996014aea6e0" width="128" height="128" loading="lazy" alt="Foveated view centered on the sneaker, with enlarged detail near fixation and compressed peripheral context"></div>
+          <div class="configuration-budget"><strong>128 × 128</strong><span>64 visual tokens</span></div>
+          <p class="configuration-description">Concentrate detail at fixation, with wide peripheral context.</p>
+        </div>
+        <div class="configuration-card" data-configuration="active">
+          <div class="configuration-label"><i class="legend-dot" aria-hidden="true"></i><h3>Uniform active</h3></div>
+          <p class="configuration-gaze">Moving gaze · uniform detail</p>
+          <div class="configuration-image"><img src="assets/observations-v5-active.png?v=335a88fef23fd8de" width="128" height="128" loading="lazy" alt="Uniform low-resolution view aimed at the same sneaker; the target occupies fewer pixels"></div>
+          <div class="configuration-budget"><strong>128 × 128</strong><span>64 visual tokens</span></div>
+          <p class="configuration-description">The same compact image budget, spread uniformly across the view.</p>
+        </div>
+        <div class="configuration-card" data-configuration="highres">
+          <div class="configuration-label"><i class="legend-dot" aria-hidden="true"></i><h3>Uniform fixed (high-res)</h3></div>
+          <p class="configuration-gaze">Fixed gaze · uniform detail</p>
+          <div class="configuration-image"><img src="assets/observations-v5-highres.png?v=0921557bbcb092a9" width="480" height="300" loading="lazy" alt="Uniform high-resolution fisheye view of the full scene from the fixed camera"></div>
+          <div class="configuration-budget"><strong>300 × 480</strong><span>570 visual tokens</span></div>
+          <p class="configuration-description">A dense view of the whole scene, at a larger rendering and encoding cost.</p>
+        </div>
+      </div>
+      <figcaption>The same five-object scene through each model’s camera. Active views fixate the sneaker for this illustration; these are native camera images, not policy rollouts. Dimensions are height × width.</figcaption>
+    </figure>
+  </div>    <div class="results-lab followup-lab">
+      <div class="results-toolbar"><div class="segmented" role="group" aria-label="Five-object learning metric"><button data-followup-metric="isr" aria-pressed="true">Success-region occupancy</button><button data-followup-metric="adr" aria-pressed="false">ADR level</button></div><label for="followup-seed">Seeds<select id="followup-seed"><option value="mean">Mean + range</option><option value="all">All seeds</option><option value="43">Seed 43</option><option value="47">Seed 47</option><option value="51">Seed 51</option></select></label><label for="followup-axis">Horizontal axis<select id="followup-axis"><option value="hours">Elapsed hours</option><option value="gpu-hours">Allocated GPU-hours</option></select></label></div>
+      <div class="followup-legend-row"><div id="followup-legend" class="model-legend" role="group" aria-label="Toggle Five-object models"></div><div class="followup-line-key" id="followup-line-key"><span><i></i>8 GPUs</span><span><i class="dashed"></i>4 GPUs</span></div></div>
+      <div class="chart-layout"><div class="chart-area"><svg id="followup-chart" viewBox="0 0 840 410" role="img" aria-label="Five-object learning curves"></svg><label class="time-control" for="followup-time">Inspect at <output id="followup-hour">—</output><input id="followup-time" type="range" min="0" max="1" step="any" value="0"></label></div><aside class="chart-readout"><div id="followup-values" aria-live="polite"></div><p class="small muted" id="followup-readout-note">Latest observation at or before the cursor. Ranges span individual seeds; they are not confidence intervals. Dots mark the last measurement inside the shared window.</p></aside></div>
+      <p id="followup-protocol" class="chart-protocol"></p>
+    </div>
+  </div></section>
+  <section class="section wrap" id="real-world" aria-labelledby="real-world-title">
+    <div class="section-heading"><h2 id="real-world-title">Zero-shot sim2real transfer</h2></div>
+    <div class="transfer-highlight">
+      <div class="transfer-copy">
+        <p class="highlight-number">78<span>%</span></p>
+        <h3>Real-world success with foveated active vision.</h3>
+        <p>The policy must distinguish a boot, laced boot, and sneaker among clutter, then grasp the requested object. It transfers directly from simulation, without real-world policy fine-tuning.</p>
+        <div class="transfer-baselines"><div><strong>26%</strong><span>Uniform active</span></div><div><strong>24%</strong><span>Uniform fixed, high-res</span></div></div>
+      </div>
+      <figure class="transfer-figure">
+        <div class="highlight-legend"><span class="foveated">Foveated active</span><span class="active">Uniform active</span><span class="highres">Uniform fixed (high-res)</span></div>
+        <img src="assets/swaps_success.svg?v=e0989e758f177c7d" width="630" height="360" loading="lazy" alt="Trial success: foveated active 87.6% in full simulation, 90% in matched simulation, 78% on the robot; uniform active 53.75%, 52%, 26%; uniform fixed high-resolution 64.2%, 64%, 24%.">
+        <figcaption>Foveated active vision leads in both domains. All models show a sim-to-real gap.</figcaption>
+      </figure>
+    </div>
+    <p class="highlight-method">Per model: 2,000 simulation trials and 50 reviewed robot trials. “Sim (50)” uses the same planned layouts and targets as the robot trials and is a subset of the full simulation set. These are trial-success rates from one completed checkpoint per model, distinct from the training curves above.</p>
+<div class="example-carousel" id="demonstrations" aria-label="Representative simulation and real-world trials">
+  <div class="example-navigation">
+    <span>Foveated policy</span>
+    <button class="button small-button" id="example-previous" aria-label="Previous trial">←</button>
+    <label for="example-select">Trial<select id="example-select"><option value="0">Trial 1 · Classy laced boot</option><option value="1">Trial 2 · Cup</option><option value="9">Trial 10 · Fist</option><option value="10">Trial 11 · Classy laced boot</option><option value="12">Trial 13 · Sneaker</option><option value="18">Trial 19 · Fist</option><option value="31">Trial 32 · Cup</option><option value="33">Trial 34 · Boot</option><option value="40">Trial 41 · Sneaker</option><option value="49">Trial 50 · Boot</option></select></label>
+    <button class="button small-button" id="example-next" aria-label="Next trial">→</button>
+    <span id="example-position" role="status">1 / 10</span>
+  </div>
+  <article class="comparison example-pair" data-pair="foveated_active-00" data-model="foveated_active" data-case="0" aria-label="Pick up the classy laced boot.">
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-00-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-00-sim.jpg?v=181fe36f3a640fc4" aria-label="Simulation: Pick up the classy laced boot."><source src="assets/videos/foveated_active-00-sim.mp4?v=95553db135b3d7fe" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-00-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-00-real.jpg?v=bf8d4d76f465985e" aria-label="Reality: Pick up the classy laced boot."><source src="assets/videos/foveated_active-00-real.mp4?v=48ce4b8b62434f3f" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-01" data-model="foveated_active" data-case="1" aria-label="Pick up the cup." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-01-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-01-sim.jpg?v=34f010403993400c" aria-label="Simulation: Pick up the cup."><source src="assets/videos/foveated_active-01-sim.mp4?v=7272def02ca6b6e3" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Failure</span></div><video id="example-foveated_active-01-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-01-real.jpg?v=f832d978084fecba" aria-label="Reality: Pick up the cup."><source src="assets/videos/foveated_active-01-real.mp4?v=fbe9efb4e0ac5a55" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-09" data-model="foveated_active" data-case="9" aria-label="Pick up the fist." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-09-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-09-sim.jpg?v=2ed29b37b0d5bc5f" aria-label="Simulation: Pick up the fist."><source src="assets/videos/foveated_active-09-sim.mp4?v=952eee6543549096" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-09-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-09-real.jpg?v=09dee708ebf66038" aria-label="Reality: Pick up the fist."><source src="assets/videos/foveated_active-09-real.mp4?v=718921de2c98fcd2" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-10" data-model="foveated_active" data-case="10" aria-label="Pick up the classy laced boot." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-10-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-10-sim.jpg?v=0891c701517914d8" aria-label="Simulation: Pick up the classy laced boot."><source src="assets/videos/foveated_active-10-sim.mp4?v=d9b0e86bb3be0b35" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-10-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-10-real.jpg?v=0ef7d17144896953" aria-label="Reality: Pick up the classy laced boot."><source src="assets/videos/foveated_active-10-real.mp4?v=e5acdafa8b9ea98b" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-12" data-model="foveated_active" data-case="12" aria-label="Pick up the sneaker." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Wrong object lifted</span></div><video id="example-foveated_active-12-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-12-sim.jpg?v=3b043adb8be62a8c" aria-label="Simulation: Pick up the sneaker."><source src="assets/videos/foveated_active-12-sim.mp4?v=c05ec08b5297e08b" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Failure</span></div><video id="example-foveated_active-12-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-12-real.jpg?v=d48edaab021a3b3c" aria-label="Reality: Pick up the sneaker."><source src="assets/videos/foveated_active-12-real.mp4?v=16f5cffd6c0f3b2f" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-18" data-model="foveated_active" data-case="18" aria-label="Pick up the fist." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-18-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-18-sim.jpg?v=36444984ba82ce51" aria-label="Simulation: Pick up the fist."><source src="assets/videos/foveated_active-18-sim.mp4?v=947e89f64da338ed" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-18-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-18-real.jpg?v=06c082eb2e379833" aria-label="Reality: Pick up the fist."><source src="assets/videos/foveated_active-18-real.mp4?v=bed6d50ce5b16b12" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-31" data-model="foveated_active" data-case="31" aria-label="Pick up the cup." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-31-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-31-sim.jpg?v=7e4d921641a8d486" aria-label="Simulation: Pick up the cup."><source src="assets/videos/foveated_active-31-sim.mp4?v=ce234f4b09c28f2a" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-31-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-31-real.jpg?v=d66628ce2f17631d" aria-label="Reality: Pick up the cup."><source src="assets/videos/foveated_active-31-real.mp4?v=42e2ca609351ccf2" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-33" data-model="foveated_active" data-case="33" aria-label="Pick up the boot." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-33-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-33-sim.jpg?v=ffa73c87589c2f82" aria-label="Simulation: Pick up the boot."><source src="assets/videos/foveated_active-33-sim.mp4?v=c10c6859c4076698" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-33-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-33-real.jpg?v=f4ce62edcb95b40e" aria-label="Reality: Pick up the boot."><source src="assets/videos/foveated_active-33-real.mp4?v=3bb922322f53b870" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-40" data-model="foveated_active" data-case="40" aria-label="Pick up the sneaker." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-40-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-40-sim.jpg?v=ed0a4e6f175ead5b" aria-label="Simulation: Pick up the sneaker."><source src="assets/videos/foveated_active-40-sim.mp4?v=0a593c8075fc9f5d" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-40-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-40-real.jpg?v=b4c20bb873b4d63f" aria-label="Reality: Pick up the sneaker."><source src="assets/videos/foveated_active-40-real.mp4?v=1c5f01df5cdb00d1" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <article class="comparison example-pair" data-pair="foveated_active-49" data-model="foveated_active" data-case="49" aria-label="Pick up the boot." hidden>
+    <div class="comparison-grid">
+<figure class="comparison-video"><div class="example-world">Simulation <span>Success</span></div><video id="example-foveated_active-49-sim" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-49-sim.jpg?v=c3d849400d857ecb" aria-label="Simulation: Pick up the boot."><source src="assets/videos/foveated_active-49-sim.mp4?v=6d1ca48feee5a138" type="video/mp4"></video></figure><figure class="comparison-video"><div class="example-world">Reality <span>Success</span></div><video id="example-foveated_active-49-real" muted playsinline preload="none" width="1280" height="920" poster="assets/videos/foveated_active-49-real.jpg?v=fea607f9d4e4cd2a" aria-label="Reality: Pick up the boot."><source src="assets/videos/foveated_active-49-real.mp4?v=d51014523650c6a4" type="video/mp4"></video></figure>    </div>
+    <div class="comparison-actions"><button class="button small-button" data-pair-play aria-label="Play both recordings">Play both ▷</button><button class="button small-button" data-pair-replay aria-label="Replay both recordings">Replay ↺</button></div>
+    <p class="pair-status" role="status" hidden></p>
+  </article>
+  <p class="small muted">Ten foveated-policy layouts, with two trials per target and 8/10 robot successes. Simulations are fresh deployment reruns that stop on success, failure, or the time limit; they are separate from the scored benchmark above. Clips keep their native timing; the shorter clip holds its final frame.</p>
+</div>  </section>
+
+  <section class="section tinted" id="foveation-strength" aria-labelledby="foveation-strength-title"><div class="wrap">
+    <div class="section-heading"><h2 id="foveation-strength-title">Balance detail with context</h2></div>
+    <div class="sweep-highlight">
+      <div class="sweep-copy"><p>We vary how strongly the image concentrates detail around gaze while keeping the compact image size, encoder, and training allocation fixed.</p><p>Intermediate foveation outperforms both the strongest concentration and nearly uniform sampling. The main model sits in this effective region; overlapping seed ranges do not establish a precise optimum.</p><p class="sweep-direction"><span>Stronger foveation</span><span aria-hidden="true">→</span><span>Nearly uniform</span></p></div>
+      <figure class="sweep-figure"><img src="assets/foveation_sweep_best.svg?v=1ca7a141c3b6899d" width="630" height="440" loading="lazy" alt="Intermediate foveation reaches about 60% best ISR; the main-paper setting reaches about 62%. The strongest and near-uniform settings reach about 52–53%. Individual seeds and their full ranges are shown."><figcaption>Connected diamonds: three-seed means, including the main model. Bars: full seed ranges. Small points: individual seeds.</figcaption></figure>
+    </div>
+    <p class="highlight-method">Five-object training on four GPUs, compared over the same 72 hours. Each seed contributes its best recorded success-region occupancy (ISR) at the final curriculum level. ISR measures time in the success region, not episode success.</p>
+
+  </div></section>
+<section class="section wrap" id="methods" aria-labelledby="methods-title">
+  <span id="rendering" class="anchor-alias"></span><span id="policy" class="anchor-alias"></span>
+  <div class="section-heading"><h2 id="methods-title">Rendering and policy architecture</h2></div>
+  <div class="methods-summary">
+    <div><h3>Render where the robot looks</h3><p>We use <code>OmniLensDistortionLutAPI</code> to attach forward and inverse lookup textures to the RTX camera. RTX traces rays directly into a compact foveated image. Gaze moves the high-detail center while retaining the wider scene. On the robot, software samples the same view from a fixed fisheye camera.</p></div>
+    <div><h3>Learn from vision, language, and touch</h3><p>A frozen, foveation-adapted visual encoder feeds a recurrent policy alongside the instruction, tactile feedback, and robot state. Reinforcement learning trains the motor policy, with supervised gaze learning and a privileged critic used only during training.</p></div>
+  </div>
+    <figure class="architecture-figure"><button id="architecture-zoom" aria-label="Enlarge the policy architecture figure"><img src="assets/architecture.svg?v=cf01a6026eaa7f0c" loading="lazy" alt="Paper architecture: direct foveated sensing and frozen visual features feed vision-language cross-attention, then a shared LSTM with tactile and proprioceptive inputs. Separate training-only critic and gaze teacher provide supervision."></button><figcaption>Figure 1 · The paper’s complete architecture. Click to enlarge. Dashed orange paths are training-only supervision.</figcaption></figure>
+  <div class="rendering-demo"><h3>Explore the rendering geometry</h3>
+    <div class="rtx-lab" aria-label="Interactive LUT camera illustration">
+      <div class="rtx-toolbar">
+        <div class="rtx-lab-title"><span class="rtx-live-dot"></span><div><strong>Follow one pixel through the camera</strong><span>Click either square image. Drag the scene to rotate the observation camera.</span></div></div>
+        <button id="rtx-reset" class="rtx-button">Reset ↺</button>
+      </div>
+      <div class="rtx-controls">
+        <div class="segmented" role="group" aria-label="LUT sampling geometry"><button data-rtx-mode="foveated" aria-pressed="true">Paper foveation</button><button data-rtx-mode="uniform" aria-pressed="false">Uniform</button></div>
+        <label class="rtx-gaze" for="rtx-gaze">Rotate gaze <output id="rtx-gaze-value">0°</output><input id="rtx-gaze" type="range" min="-32" max="32" step="0.5" value="0"></label>
+        <label class="rtx-gaze" for="rtx-pitch">Camera tilt <output id="rtx-pitch-value">0°</output><input id="rtx-pitch" type="range" min="-20" max="20" step="0.5" value="0"></label>
+        <label class="rtx-mask"><input id="rtx-mask" type="checkbox" checked> Apply camera bounds mask</label>
+      </div>
+      <div class="rtx-panels">
+        <figure class="rtx-texture-panel"><div class="rtx-panel-heading"><span>01 / Forward LUT</span><small>128 × 128 · RGB directions</small></div><canvas id="rtx-forward" width="384" height="384" tabindex="0" role="img" aria-label="Color-coded forward direction lookup texture. Click or use arrow keys to select a pixel; Home resets."></canvas><figcaption><span class="rtx-color-key"><i></i> Color encodes direction, not scene color.</span><span>Texture coordinates → camera-space ray</span></figcaption></figure>
+        <figure class="rtx-scene-panel"><div class="rtx-panel-heading"><span>02 / Ray → scene</span><small>Rotate observation camera · drag or arrows</small></div><canvas id="rtx-scene" tabindex="0" role="img" aria-label="WebGL scene with rotatable observation camera and nonuniform ray bundle. The gold ray corresponds to the selected pixel."></canvas><figcaption><span><i class="rtx-ray-key"></i> Selected ray <i class="rtx-bundle-key"></i> Sparse subset of the ray bundle</span><span id="rtx-lut-status" role="status">Both LUTs stay fixed when gaze rotates.</span></figcaption></figure>
+        <figure class="rtx-texture-panel"><div class="rtx-panel-heading"><span>03 / Foveated output</span><small>128 × 128 · WebGL rendering</small></div><canvas id="rtx-output" width="384" height="384" tabindex="0" role="img" aria-label="WebGL-rendered foveated image of the captured five-object scene and robot. Click or use arrow keys to select a pixel; Home resets."></canvas><figcaption><span id="rtx-output-note">Circular + calibrated-camera masks</span><span>Same ray samples, fixed transpose / flip</span></figcaption></figure>
+      </div>
+      <div class="rtx-readout" aria-live="polite"><div><span>Output pixel · column, row</span><strong id="rtx-pixel">—</strong></div><div><span>Forward lookup · u, v</span><strong id="rtx-uv">—</strong></div><div><span>Camera ray · x, y, z</span><strong id="rtx-direction">—</strong></div><div><span>Selected sample</span><strong id="rtx-hit">—</strong></div></div>
+    </div>
+
+
+  </div>
+    <div class="rtx-inverse">
+      <figure><div class="rtx-panel-heading"><span>The second LUT</span><small>512 × 512 · RG image coordinates</small></div><canvas id="rtx-inverse" width="512" height="512" role="img" aria-label="Inverse lookup texture over octahedrally encoded directions. Red and green encode output texture u and v. The selected direction is marked in gold."></canvas><figcaption>Each position represents a direction.<br>Its stored color represents an image location.</figcaption></figure>
+      <div class="rtx-inverse-copy"><h3>Reverse lookup: direction to pixel</h3><p>Tracing starts with a pixel and asks where it looks. Operations such as motion-vector computation ask the reverse: <strong>where does this direction land in the image?</strong></p><p>We analytically invert the angular mapping and CMF warp, then sample that inverse into a second texture. Its square domain is an <em>octahedral encoding</em> of directions over the whole sphere. Its two stored values are the corresponding forward-texture coordinates.</p><div class="rtx-inverse-readout"><span>Selected ray → direction address <strong id="rtx-oct">—</strong></span><span>Inverse LUT → recovered u, v <strong id="rtx-recovered">—</strong></span></div><p class="rtx-try"><span>Try it</span> Move gaze: the rendered scene changes, but both lookup textures and this camera-space correspondence remain fixed. Switch to uniform sampling: both maps change together.</p></div>
+    </div>
+  <p class="small muted">Interactive WebGL illustration of the captured five-object scene, Rizon arm and Sharpa hand. Joint positions and camera calibration match the film’s RTX capture; this browser view uses lit meshes and a cube-camera ray lookup, following the Alpha/NIST viewer. It omits the lab background; the film shows native RTX output.</p>
+</section>
+  <section class="section wrap paper-ending" id="resources" aria-labelledby="paper-ending-title">
+    <h2 id="paper-ending-title"><span class="project-wordmark">FOVI<span>-Dex</span></span><span class="ending-paper-title">Foveation enables efficient perceptive learning of dexterous manipulation in simulation</span></h2>
+<div class="authors" aria-label="Authors">
+      <a href="mailto:nblauch@nvidia.com">Nicholas M. Blauch<sup>†</sup></a><span>Nicolas Moenne-Loccoz</span><span>Jayjun Lee</span><span>Patrick Yin</span><span>Asif Rana</span><span>Mohak Bhardwaj</span><span>Jessica Yin</span><span>Sam Mady</span><span>Marilyn Reeb</span><span>Karl Van Wyk</span><span>Nathan Ratliff</span><span>Jae-Hyun Jung</span><span>Ruth Rosenholtz</span><span>Ankur Handa</span><span>Gavriel State</span>
+    </div>    <p>NVIDIA</p>
+    <a class="button primary" href="assets/paper.pdf?v=1f8b5946a902e371" target="_blank" rel="noopener">Read the paper ↗</a>
+  </section>
+</main>
+<dialog id="figure-dialog" aria-label="Enlarged architecture figure"><button id="figure-close" class="close-button" aria-label="Close enlarged figure">✕</button><img loading="lazy" src="assets/architecture.svg?v=cf01a6026eaa7f0c" alt="Full policy architecture from Figure 1"></dialog>
+<noscript><p class="noscript"><a href="assets/paper.pdf?v=1f8b5946a902e371">Read the paper (PDF)</a>. Interactive viewers and video playback require JavaScript.</p></noscript>
+</div>
+</body></html>

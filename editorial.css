@@ -1,0 +1,70 @@
+/* White surfaces and a compact reading sequence shared by both site layouts. */
+:root,body.reference-site{--paper:#fff;--wash:#fff}
+.configuration-instruction{background:#fff!important}
+html,body,#site-content,#site-loader,.section,.tinted,.masthead,.reference-mobile-contents,.reference-sidebar,.reference-context,.sampling-lab,.lab-controls,.sampling-panels,.panel-title,.results-lab,.results-toolbar,.chart-readout,.time-control,.rtx-lab,.rtx-toolbar,.rtx-controls,.rtx-panels,.rtx-readout,.rtx-panels figure,.rtx-panel-heading,.architecture-figure,.architecture-figure button,.comparison,.example-world,.comparison-actions,.slide-heading,.transfer-figure,.sweep-figure{background:#fff!important;background-image:none!important}
+.segmented,.segmented button,.button,button,input,select,.reference-site [data-reference-link],.reference-site [data-reference-link]:hover,.reference-site [data-reference-link][aria-current]{background-color:#fff!important}
+.button.primary{color:var(--blue)!important;border:1px solid var(--blue)}
+.segmented button[aria-pressed=true]{color:var(--blue)!important;box-shadow:inset 0 -2px var(--blue)}
+[hidden]{display:none!important}
+.section-heading{align-items:start}
+.section-heading>h2{font-size:clamp(30px,3.7vw,48px);letter-spacing:-.045em;line-height:1.12;max-width:1000px}
+.section{padding-top:70px;padding-bottom:70px}
+.hero{padding-top:90px;padding-bottom:65px}
+.hero .hero-training{margin-top:26px}
+.sampling-panels{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:center;gap:32px}
+.sampling-panels .camera-panel{grid-column:auto}
+.sampling-panels figure{min-width:0}
+#sample-camera{width:100%;height:auto;aspect-ratio:8/5;image-rendering:pixelated;touch-action:none}
+#sample-native{width:100%;height:auto;aspect-ratio:1;image-rendering:pixelated;max-width:none}
+.sampling-note{max-width:1000px;line-height:1.6}
+.lab-controls{gap:24px}
+.slider-label{flex:1;max-width:330px}
+.methods-summary{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:30px 0}
+.methods-summary h3{font-size:22px;margin:0 0 14px;letter-spacing:-.02em}
+.methods-summary p{font-size:16px;color:var(--muted);line-height:1.65}
+.rendering-demo{margin-top:48px}
+.rendering-demo>h3{font-size:24px;margin-bottom:22px}
+.example-carousel{margin-top:40px}
+.example-navigation{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.example-navigation label{display:flex;align-items:center;gap:12px;font-size:14px}
+.example-navigation select{font:inherit;padding:10px;border:1px solid var(--line);border-radius:5px;max-width:220px}
+#example-position{margin-left:auto;font-size:13px;color:var(--muted)}
+.example-pair{margin:0 0 18px}
+.example-pair .comparison-actions{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:12px}
+.paper-ending{border-top:1px solid var(--line);text-align:center}
+.paper-ending h2{font-size:clamp(26px,3vw,40px);line-height:1.25;max-width:920px;margin:0 auto 28px;letter-spacing:-.025em}
+.project-wordmark{font-family:FoviWordmark,sans-serif;letter-spacing:0;line-height:1.02;font-weight:700;color:#152134}
+.project-wordmark>span{font-weight:inherit;color:#2458d3}
+.paper-ending .project-wordmark{display:block;font-size:clamp(66px,9vw,105px);margin-bottom:24px}
+.ending-paper-title{display:block}
+.paper-ending .authors{margin:0 auto 24px;max-width:1000px;justify-content:center}
+.paper-ending>p{color:var(--muted);margin:18px 0 28px}
+.reference-site{--reference-right:44px}
+.reference-site .reference-context{display:none}
+.reference-site .reference-header .reference-edition{display:none}
+.reference-site .reference-contents a{padding-left:14px}
+.highlight-page .section-heading>h2{font-size:36px}
+.highlight-page .sampling-panels{max-width:1000px}
+@media(max-width:800px){.section{padding-top:45px;padding-bottom:45px}.sampling-panels{grid-template-columns:minmax(0,1fr);gap:24px}#sample-native{max-width:300px;margin:auto}.methods-summary{grid-template-columns:minmax(0,1fr);gap:24px}.example-navigation{gap:8px}.example-navigation label{gap:6px;font-size:12px}.example-navigation select{max-width:170px;padding:8px}.example-navigation .button{padding:8px 10px}.reference-site{--reference-right:20px}.lab-controls{flex-wrap:wrap}.hero{padding-top:65px}}
+/* Section rules and centered headings retain a clear rhythm on white. */
+.section{border-top:1px solid #20252b30}
+.section-heading{display:block;text-align:center}
+.section-heading>h2{margin-left:auto;margin-right:auto}
+.slide-heading{text-align:center}
+.model-schematic{margin:32px 0 48px}
+.budget-comparison{margin-top:40px}
+.budget-row>span:first-child{flex-direction:column;align-items:flex-start;justify-content:center}
+.budget-row>*:nth-child(3){background:#fff}
+.hook-controls button{color:var(--ink);background:#fff!important}
+.explainer-film{position:relative;margin:0}
+.explainer-film video{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.explainer-film>button{position:absolute;bottom:85px;left:50%;transform:translateX(-50%);padding:16px 25px;border:1px solid var(--blue);border-radius:30px;color:var(--blue);font:600 15px Inter,Arial,sans-serif;white-space:nowrap;box-shadow:0 4px 24px #15213412;cursor:pointer}
+.explainer-film figcaption{text-align:center;color:var(--muted);font-size:13px;line-height:1.8;margin:18px 0 0}
+.explainer-film figcaption a{margin-left:12px}
+@media(max-width:700px){.explainer-film>button{bottom:76px;font-size:12px;padding:11px 16px}.explainer-film figcaption{font-size:11px}.explainer-film figcaption a{display:inline-block}}
+.rtx-inverse,.rtx-inverse-readout{background:#fff!important}
+@media(max-width:700px){.budget-row>*{padding:14px 10px}.budget-row strong{font-size:24px}.budget-row>span:first-child{font-size:11px}.budget-head{font-size:12px}.section-heading>h2{font-size:30px}}
+
+.example-world{display:flex;justify-content:space-between;gap:12px}.example-world span{font-weight:400;color:var(--muted)}
+.example-navigation{flex-wrap:wrap}.example-navigation select{max-width:260px}
+@media(max-width:800px){.example-navigation label:first-child{width:100%}.example-navigation label:first-child select{flex:1}.example-navigation select{max-width:210px}.example-navigation label[for=example-select]{flex:1;min-width:0}.example-navigation #example-select{max-width:100%;width:100%;min-width:0}.example-navigation #example-position{margin:0}}
